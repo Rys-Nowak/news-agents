@@ -4,23 +4,73 @@ def build_tasks(agents, article1, article2):
     # TODO diffrent task for 1 and for multiple docs
     return [
         Task(
-            description=f"\n\nARTYKUŁ 1:\n{article1}\n\nARTYKUŁ 2:\n{article2}\n\n",
+            description="""
+                Porównaj narrację i strukturę artykułów opisujących ten sam temat,
+                --- Artykuł A ---
+                Tytuł: {a1['title']}
+                Treść: {a1['content']}
+    
+                --- Artykuł B ---
+                Tytuł: {a2['title']}
+                Treść: {a2['content']}
+                ale pochodzących z różnych źródeł lub dat. Skoncentruj się na różnicach w tonie, selekcji faktów,
+                emocjonalnym nacechowaniu, pominięciach lub przesunięciach w akcentach.
+                Zidentyfikuj zmiany, które mogą świadczyć o subtelnej manipulacji treścią.
+                """,
             agent=agents["comparator"],
-            expected_output="..."
+            expected_output="""
+                Szczegółowe porównanie narracji artykułów, zawierające:
+                - Kluczowe różnice w tonie i doborze informacji
+                - Możliwe pominięcia lub przesunięcia akcentów
+                - Fragmenty tekstu ilustrujące różnice
+                - Wnioski: czy różnice wskazują na potencjalną manipulację
+                """
         ),
         Task(
-            description="...",
+            description="""
+                Przeanalizuj ton i język artykułu lub jego fragmentów.
+                Zidentyfikuj elementy wskazujące na nacechowanie emocjonalne, 
+                manipulacyjny dobór słów, wartościujące przymiotniki lub inne środki wpływające na odbiór.
+                Uwzględnij użycie retoryki, eufemizmów, pejoratywów, modalności i idiomów.
+                """,
             agent=agents["tone_analyst"],
-            expected_output="..."
+            expected_output="""
+                Raport analizy tonu zawierający:
+                - Identyfikację fragmentów nacechowanych emocjonalnie
+                - Opis użycia języka sugerującego opinię zamiast faktów
+                - Kategorie użytych środków stylistycznych (np. clickbait, dramatyzacja, sugestywność)
+                - Ocena ogólnego tonu: neutralny / emocjonalny / perswazyjny / dramatyczny
+                """
         ),
         Task(
-            description="...",
+            description="""
+                Przeanalizuj artykuł i sklasyfikuj obecne formy stronniczości (biasu) zgodnie z uznaną typologią.
+                Uwzględnij m.in.: bias przez pominięcie, dobór źródeł, framing ideologiczny, spin, 
+                ad hominem, błędy logiczne, dobór zdjęć i opisów, oraz przedstawianie opinii jako faktów.
+                """,
             agent=agents["bias_analyst"],
-            expected_output="..."
+            expected_output="""
+                Lista wykrytych form biasu z przypisanymi fragmentami artykułu:
+                - Typy biasu wg klasyfikacji (np. spin, gatekeeping, labeling, omission)
+                - Kontekst użycia i jego interpretacja
+                - Wskaźnik pewności (np. 0–1)
+                - Możliwa intencja stojąca za zastosowaną stronniczością
+                """
         ),
         Task(
-            description="...",
+            description="""
+                Na podstawie raportów od pozostałych agentów (porównującego narracje, analizującego ton i bias),
+                przygotuj końcową ocenę artykułu. Określ, czy zawiera on manipulację i w jakim stopniu.
+                Podaj uzasadnienie decyzji, wskazując na kluczowe elementy manipulacyjne oraz ich znaczenie.
+                """,
             agent=agents["conclusion_agent"],
-            expected_output="..."
+            expected_output="""
+                Końcowa decyzja dotycząca artykułu:
+                - Czy występuje manipulacja: tak / nie
+                - Rodzaj manipulacji (np. emocjonalna, informacyjna, ideologiczna)
+                - Poziom intensywności (np. subtelna / umiarkowana / silna)
+                - Argumentacja na podstawie danych od pozostałych agentów
+                - Wnioski końcowe do przedstawienia użytkownikowi lub ewaluatorowi
+                """
         )
     ]
