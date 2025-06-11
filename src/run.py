@@ -1,4 +1,5 @@
 from crewai import Crew
+from pathlib import Path
 
 def run_crew_pipeline(agents, tasks):
 
@@ -8,8 +9,8 @@ def run_crew_pipeline(agents, tasks):
         verbose=True # dla debug
     )
 
-    results = crew.run()
+    results = crew.kickoff()
     for idx, result in enumerate(results, 1):
         print(f"Task {idx}: {result}\n")
-
+    
     return results

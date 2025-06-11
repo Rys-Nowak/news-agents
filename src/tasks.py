@@ -4,18 +4,17 @@ def build_tasks(agents, article1, article2):
     # TODO diffrent task for 1 and for multiple docs
     return [
         Task(
-            description="""
-                Porównaj narrację i strukturę artykułów opisujących ten sam temat,
-                --- Artykuł A ---
-                Tytuł: {a1['title']}
-                Treść: {a1['content']}
-    
-                --- Artykuł B ---
-                Tytuł: {a2['title']}
-                Treść: {a2['content']}
-                ale pochodzących z różnych źródeł lub dat. Skoncentruj się na różnicach w tonie, selekcji faktów,
+            description=f"""
+                Porównaj narrację i strukturę artykułów opisujących ten sam temat, ale pochodzących z różnych źródeł lub dat. Skoncentruj się na różnicach w tonie, selekcji faktów,
                 emocjonalnym nacechowaniu, pominięciach lub przesunięciach w akcentach.
                 Zidentyfikuj zmiany, które mogą świadczyć o subtelnej manipulacji treścią.
+                --- Artykuł A ---
+                Tytuł: {article1['title']}
+                Treść: {article1['content']}
+    
+                --- Artykuł B ---
+                Tytuł: {article2['title']}
+                Treść: {article2['content']}
                 """,
             agent=agents["comparator"],
             expected_output="""
@@ -27,11 +26,14 @@ def build_tasks(agents, article1, article2):
                 """
         ),
         Task(
-            description="""
+            description=f"""
                 Przeanalizuj ton i język artykułu lub jego fragmentów.
                 Zidentyfikuj elementy wskazujące na nacechowanie emocjonalne, 
                 manipulacyjny dobór słów, wartościujące przymiotniki lub inne środki wpływające na odbiór.
                 Uwzględnij użycie retoryki, eufemizmów, pejoratywów, modalności i idiomów.
+                --- Artykuł A ---
+                Tytuł: {article1['title']}
+                Treść: {article1['content']}
                 """,
             agent=agents["tone_analyst"],
             expected_output="""
@@ -43,10 +45,14 @@ def build_tasks(agents, article1, article2):
                 """
         ),
         Task(
-            description="""
+            description=f"""
                 Przeanalizuj artykuł i sklasyfikuj obecne formy stronniczości (biasu) zgodnie z uznaną typologią.
                 Uwzględnij m.in.: bias przez pominięcie, dobór źródeł, framing ideologiczny, spin, 
                 ad hominem, błędy logiczne, dobór zdjęć i opisów, oraz przedstawianie opinii jako faktów.
+
+                --- Artykuł B ---
+                Tytuł: {article2['title']}
+                Treść: {article2['content']}
                 """,
             agent=agents["bias_analyst"],
             expected_output="""

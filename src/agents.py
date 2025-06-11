@@ -7,13 +7,14 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 def create_llm():
     return ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model="gemini-pro",  # Using gemini-pro instead of flash which requires Vertex AI
         temperature=0.1,
-        google_api_key=os.getenv("GOOGLE_API_KEY")
+        google_api_key=os.getenv("GOOGLE_API_KEY"),
+        convert_system_message_to_human=True
     )
 
 def build_agents():
-    llm = create_llm()
+    #llm = create_llm()
 
     comparator = Agent(
         role="Ekspert porównujący narracje",
@@ -24,7 +25,7 @@ def build_agents():
                 Szukasz zmian tonu, pominięć, przesunięć perspektywy oraz wszelkich oznak manipulacji semantycznej lub emocjonalnej.
                 Twoja wiedza obejmuje retorykę, NLP oraz analizę semantyczną tekstu.
                 """,
-        llm=llm
+        llm='gemini/gemini-2.0-flash'
     )
 
     bias_analyst = Agent(
@@ -36,7 +37,7 @@ def build_agents():
                 Na podstawie treści artykułu potrafisz sklasyfikować, które formy biasu zostały zastosowane i w jakim celu. 
                 Wykorzystujesz systemy NLP i wiedzę o dezinformacji.
                 """,
-        llm=llm
+        llm='gemini/gemini-2.0-flash'
     )
 
     tone_analyst = Agent(
@@ -48,7 +49,7 @@ def build_agents():
                 czy przedstawia fakty w sposób nacechowany ideologicznie. Analizujesz przymiotniki, czasowniki modalne, frazy wartościujące
                 i idiomy sugerujące ocenę zamiast obiektywnego opisu rzeczywistości.
                 """,
-        llm=llm
+        llm='gemini/gemini-2.0-flash'
     )
 
     conclusion_agent = Agent(
@@ -59,7 +60,7 @@ def build_agents():
                 analizującego bias oraz tonu – i na tej podstawie tworzysz końcową ocenę: czy artykuł zawiera manipulację, jakiego rodzaju, 
                 i na jakim poziomie pewności. Jesteś odpowiedzialny za syntetyczną, zrozumiałą i rzetelną ocenę artykułu z perspektywy czytelnika.
                 """,
-        llm=llm
+        llm='gemini/gemini-2.0-flash'
     )
 
     return {

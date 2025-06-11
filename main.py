@@ -1,3 +1,4 @@
+import os
 from src.agents import build_agents
 from src.tasks import build_tasks
 from src.run import run_crew_pipeline
@@ -10,7 +11,7 @@ def main():
     reader = FileReader()
     article1 = reader.load_json("data/article_1.json")
     article2 = reader.load_json("data/article_2.json")
-
+    
     agents = build_agents()
     #TODO multiple docs, prolly in dict
     tasks = build_tasks(agents, article1, article2)
@@ -18,4 +19,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print("Gemini API key:", os.getenv("GEMINI_API_KEY"))
     main()

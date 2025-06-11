@@ -11,7 +11,6 @@ class Scraper:
         self.sleep = sleep_between_requests
 
     def fetch_article(self, url):
-        """Fetches and parses a single Onet article."""
         try:
             response = requests.get(url, headers=self.headers)
             response.raise_for_status()
@@ -43,7 +42,7 @@ class Scraper:
             time.sleep(self.sleep)
         return articles
 
-    def scrape_and_save(self, urls, output_path="onet_articles.json"):
+    def scrape_and_save(self, urls, output_path="articles.json"):
         """Scrapes URLs and saves the results to a JSON file."""
         articles = self.scrape(urls)
         with open(output_path, "w", encoding="utf-8") as f:
